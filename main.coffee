@@ -7,4 +7,8 @@ modelData = ENV.APP_STATE ?=
 
 model = require("./model")(modelData)
 
+style = document.createElement "style"
+style.textContent = require("./style")
+document.head.appendChild style
 
+document.body.appendChild require("./template")(model)

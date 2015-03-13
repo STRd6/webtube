@@ -12,5 +12,8 @@ module.exports = (I={}, self=Model(I)) ->
         method: "POST"
         data: @source()
         processData: false
+      .then (result) ->
+        self.url "http://api.hyperweb.space/h/#{result}"
+        console.log result
 
   self

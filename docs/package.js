@@ -180,7 +180,7 @@
     },
     "main.coffee": {
       "path": "main.coffee",
-      "content": "global.appData = ->\n  ENV.APP_STATE\n\nmodelData = ENV.APP_STATE ?=\n  source: \"\"\n  url: \"\"\n\nmodel = require(\"./model\")(modelData)\n\nstyle = document.createElement \"style\"\nstyle.textContent = require(\"./style\")\ndocument.head.appendChild style\n\ndocument.body.appendChild require(\"./template\")(model)\n",
+      "content": "global.appData = ->\n  ENV.APP_STATE\n\nmodelData = ENV?.APP_STATE ?=\n  source: \"\"\n  url: \"\"\n\nmodel = require(\"./model\")(modelData)\n\nstyle = document.createElement \"style\"\nstyle.textContent = require(\"./style\")\ndocument.head.appendChild style\n\ndocument.body.appendChild require(\"./template\")(model)\n",
       "mode": "100644"
     },
     "pixie.cson": {
@@ -207,7 +207,7 @@
   "distribution": {
     "main": {
       "path": "main",
-      "content": "(function() {\n  var model, modelData, style;\n\n  global.appData = function() {\n    return ENV.APP_STATE;\n  };\n\n  modelData = ENV.APP_STATE != null ? ENV.APP_STATE : ENV.APP_STATE = {\n    source: \"\",\n    url: \"\"\n  };\n\n  model = require(\"./model\")(modelData);\n\n  style = document.createElement(\"style\");\n\n  style.textContent = require(\"./style\");\n\n  document.head.appendChild(style);\n\n  document.body.appendChild(require(\"./template\")(model));\n\n}).call(this);\n",
+      "content": "(function() {\n  var model, modelData, style;\n\n  global.appData = function() {\n    return ENV.APP_STATE;\n  };\n\n  modelData = typeof ENV !== \"undefined\" && ENV !== null ? ENV.APP_STATE != null ? ENV.APP_STATE : ENV.APP_STATE = {\n    source: \"\",\n    url: \"\"\n  } : void 0;\n\n  model = require(\"./model\")(modelData);\n\n  style = document.createElement(\"style\");\n\n  style.textContent = require(\"./style\");\n\n  document.head.appendChild(style);\n\n  document.body.appendChild(require(\"./template\")(model));\n\n}).call(this);\n",
       "type": "blob"
     },
     "pixie": {

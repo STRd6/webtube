@@ -15,27 +15,32 @@ window["STRd6/webtube:master"]({
     "main.coffee": {
       "path": "main.coffee",
       "content": "global.appData = ->\n  ENV.APP_STATE\n\nmodelData = ENV?.APP_STATE ?=\n  source: \"\"\n  url: \"\"\n\nmodel = require(\"./model\")(modelData)\n\nstyle = document.createElement \"style\"\nstyle.textContent = require(\"./style\")\ndocument.head.appendChild style\n\ndocument.body.appendChild require(\"./template\")(model)\n",
-      "mode": "100644"
+      "mode": "100644",
+      "type": "blob"
+    },
+    "model.coffee": {
+      "path": "model.coffee",
+      "content": "Model = require \"model\"\n\nmodule.exports = (I={}, self=Model(I)) ->\n  self.attrObservable \"source\", \"url\"\n  \n  url = \"http://api.hyperweb.space/hooks/create\"\n  # url = \"http://localhost:5000/hooks/create\"\n\n  self.extend\n    save: ->\n      $.ajax\n        url: url\n        headers:\n          \"Content-Type\": \"text/plain\"\n        method: \"POST\"\n        data: @source()\n        processData: false\n      .then (result) ->\n        self.url \"http://api.hyperweb.space/h/#{result}\"\n        console.log result\n\n  self\n",
+      "mode": "100644",
+      "type": "blob"
     },
     "pixie.cson": {
       "path": "pixie.cson",
       "content": "remoteDependencies: [\n  \"https://code.jquery.com/jquery-2.1.3.min.js\"\n]\ndependencies:\n  model: \"distri/model:v0.1.3\"\n",
-      "mode": "100644"
-    },
-    "model.coffee": {
-      "path": "model.coffee",
-      "content": "Model = require \"model\"\n\nmodule.exports = (I={}, self=Model(I)) ->\n  self.attrObservable \"source\", \"url\"\n\n  self.extend\n    save: ->\n      $.ajax\n        url: \"http://api.hyperweb.space/hooks/create\"\n        headers:\n          \"Content-Type\": \"text/plain\"\n        method: \"POST\"\n        data: @source()\n        processData: false\n      .then (result) ->\n        self.url \"http://api.hyperweb.space/h/#{result}\"\n        console.log result\n\n  self\n",
-      "mode": "100644"
+      "mode": "100644",
+      "type": "blob"
     },
     "style.styl": {
       "path": "style.styl",
       "content": "*\n  box-sizing: border-box\n\ntextarea\n  width: 100%\n  height: 300px\n  display: block\n",
-      "mode": "100644"
+      "mode": "100644",
+      "type": "blob"
     },
     "template.haml": {
       "path": "template.haml",
       "content": ".webtube\n  %h1 WebTube\n  %a(href=@url)= @url\n  %textarea(value=@source)\n  %button(click=@save) Save\n",
-      "mode": "100644"
+      "mode": "100644",
+      "type": "blob"
     }
   },
   "distribution": {
@@ -44,14 +49,14 @@ window["STRd6/webtube:master"]({
       "content": "(function() {\n  var model, modelData, style;\n\n  global.appData = function() {\n    return ENV.APP_STATE;\n  };\n\n  modelData = typeof ENV !== \"undefined\" && ENV !== null ? ENV.APP_STATE != null ? ENV.APP_STATE : ENV.APP_STATE = {\n    source: \"\",\n    url: \"\"\n  } : void 0;\n\n  model = require(\"./model\")(modelData);\n\n  style = document.createElement(\"style\");\n\n  style.textContent = require(\"./style\");\n\n  document.head.appendChild(style);\n\n  document.body.appendChild(require(\"./template\")(model));\n\n}).call(this);\n",
       "type": "blob"
     },
+    "model": {
+      "path": "model",
+      "content": "(function() {\n  var Model;\n\n  Model = require(\"model\");\n\n  module.exports = function(I, self) {\n    var url;\n    if (I == null) {\n      I = {};\n    }\n    if (self == null) {\n      self = Model(I);\n    }\n    self.attrObservable(\"source\", \"url\");\n    url = \"http://api.hyperweb.space/hooks/create\";\n    self.extend({\n      save: function() {\n        return $.ajax({\n          url: url,\n          headers: {\n            \"Content-Type\": \"text/plain\"\n          },\n          method: \"POST\",\n          data: this.source(),\n          processData: false\n        }).then(function(result) {\n          self.url(\"http://api.hyperweb.space/h/\" + result);\n          return console.log(result);\n        });\n      }\n    });\n    return self;\n  };\n\n}).call(this);\n",
+      "type": "blob"
+    },
     "pixie": {
       "path": "pixie",
       "content": "module.exports = {\"remoteDependencies\":[\"https://code.jquery.com/jquery-2.1.3.min.js\"],\"dependencies\":{\"model\":\"distri/model:v0.1.3\"}};",
-      "type": "blob"
-    },
-    "model": {
-      "path": "model",
-      "content": "(function() {\n  var Model;\n\n  Model = require(\"model\");\n\n  module.exports = function(I, self) {\n    if (I == null) {\n      I = {};\n    }\n    if (self == null) {\n      self = Model(I);\n    }\n    self.attrObservable(\"source\", \"url\");\n    self.extend({\n      save: function() {\n        return $.ajax({\n          url: \"http://api.hyperweb.space/hooks/create\",\n          headers: {\n            \"Content-Type\": \"text/plain\"\n          },\n          method: \"POST\",\n          data: this.source(),\n          processData: false\n        }).then(function(result) {\n          self.url(\"http://api.hyperweb.space/h/\" + result);\n          return console.log(result);\n        });\n      }\n    });\n    return self;\n  };\n\n}).call(this);\n",
       "type": "blob"
     },
     "style": {
@@ -71,7 +76,7 @@ window["STRd6/webtube:master"]({
     }
   },
   "progenitor": {
-    "url": "http://hyperweb.space/?repo=STRd6/webtube"
+    "url": "http://www.danielx.net/editor/"
   },
   "entryPoint": "main",
   "remoteDependencies": [
